@@ -1,0 +1,191 @@
+syntax = "proto3";
+
+package solana_stake;
+
+import "google/protobuf/timestamp.proto";
+import "messages/response/response.proto";
+import "messages/types/types.proto";
+
+option go_package = "./solana_stake";
+
+service SolanaStakeService {
+		  rpc ValidatorInfo(ValidatorInfoRequest) returns (ValidatorInfoResponse) {}
+		  rpc ValidatorsList(ValidatorsListRequest) returns (ValidatorsListResponse) {}
+
+		  rpc CreateStakeAccount(CreateStakeAccountRequest) returns (CreateStakeAccountResponse) {}
+		  rpc DelegateStake(DelegateStakeRequest) returns (DelegateStakeResponse) {}
+		  rpc DeactivateStake(DeactivateStakeRequest) returns (DeactivateStakeResponse) {}
+		  rpc WithdrawStake(WithdrawStakeRequest) returns (WithdrawStakeResponse) {}
+
+		  rpc StakeActivationStatus(StakeActivationStatusRequest) returns (StakeActivationStatusResponse) {}
+		  rpc StakeAccountInfo(StakeAccountInfoRequest) returns (StakeAccountInfoResponse) {}
+}
+
+message Validator {
+		  int64 Id = 1;
+		  string Network = 2;
+		  string Account = 3;
+		  string Name = 4;
+		  string WwwUrl = 5;
+		  string Details = 6;
+		  string AvatarUrl = 7;
+		  google.protobuf.Timestamp CreatedAt = 8;
+		  google.protobuf.Timestamp UpdatedAt = 9;
+		  int64 TotalScore = 10;
+		  int64 RootDistanceScore = 11;
+		  int64 VoteDistanceScore = 12;
+		  int64 SkippedSlotScore = 13;
+		  string SoftwareVersion = 14;
+		  int64 SoftwareVersionScore = 15;
+		  int64 StakeConcentrationScore = 16;
+		  int64 DataCenterConcentrationScore = 17;
+		  int64 PublishedInformationScore = 18;
+		  int64 SecurityReportScore = 19;
+		  int64 ActiveStake = 20;
+		  int64 Commission = 21;
+		  bool Delinquent = 22;
+		  string DataCenterKey = 23;
+		  string DataCenterHost = 24;
+		  int64 AutonomousSystemNumber = 25;
+		  string VoteAccount = 26;
+		  int64 EpochCredits = 27;
+		  int64 SkippedSlots = 28;
+		  string SkippedSlotPercent = 29;
+		  string PingTime = 30;
+		  string Url = 31;
+}
+
+message StakeAccount {
+		  message Info {
+		  			 message Meta {
+								message Authorized {
+										  message Lockup {
+										  			 int64 UnixTimeStamp = 1;
+													 uint64 Epoch = 2;
+													 string CustodianAddressBase58 = 3;
+										  }
+										  string StakeAddressBase58 = 1;
+										  string WithdrawAddressBase58 = 2;
+										  Lockup lockup = 3;
+								}
+					 			int64 RentExemptReserve = 1;
+								Authorized authorized = 2;
+					 }
+					 message Stake {
+					 			message Delegation {
+										  string VoterAddressBase58 = 1;
+										  int64 Stake = 2;
+										  int64 ActivationEpoch = 3;
+										  int64 DeactivationEpoch = 4;
+										  double WarmupCooldownRate = 5;
+								}
+								Delegation delegation = 1;
+								uint64 CreditsObserved = 2;
+					 }
+					 Meta meta = 1;
+					 Stake stake = 2;
+		  }
+		  ActivationStatus Status = 1;
+		  Info info = 2;
+}
+
+message ValidatorInfoRequest {
+		  int64 Id = 1;
+}
+
+message ValidatorInfoResponse {
+		  Validator Info = 1;
+		  response.Status ret_status = 2;
+}
+
+enum ValidatorSortField {
+	  ACTIVE_STAKE = 0;
+	  CREATED_AT = 1;
+	  TOTAL_SCORE = 2;
+}
+
+enum ActivationStatus {
+	  ACTIVE = 0;
+	  INACTIVE = 1;
+	  ACTIVATING = 2;
+	  DEACTIVATING = 3;
+}
+
+message ValidatorsListRequest {
+		  int32 From = 1;
+		  int32 Limit = 2;
+		  ValidatorSortField SortField = 3;
+		  types.Order Order = 4;
+}
+
+message ValidatorsListResponse {
+		  repeated Validator List = 1;
+		  response.Status ret_status = 2;
+}
+
+message CreateStakeAccountRequest {
+		  string SignerPrivateBase58 = 1;
+		  string Amount = 2;
+}
+
+message CreateStakeAccountResponse {
+		  string TxHash = 1;
+		  string StakeAddressBase58 = 2;
+		  response.Status ret_status = 3;
+}
+
+message DelegateStakeRequest {
+		  string SignerPrivateBase58 = 1;
+		  string StakeAddressBase58 = 2;
+		  string VoteAddressBase58 = 3;
+}
+
+message DelegateStakeResponse {
+		  string TxHash = 1;
+		  response.Status ret_status = 2;
+}
+
+message DeactivateStakeRequest {
+		  string SignerPrivateBase58 = 1;
+		  string StakeAddressBase58 = 2;
+}
+
+message DeactivateStakeResponse {
+		  string TxHash = 1;
+		  response.Status ret_status = 2;
+}
+
+message WithdrawStakeRequest {
+		  string SignerPrivateBase58 = 1;
+		  string StakeAddressBase58 = 2;
+		  string Amount = 3;
+}
+
+message WithdrawStakeResponse {
+		  string TxHash = 1;
+		  response.Status ret_status = 2;
+}
+
+message StakeActivationStatusRequest {
+		  string StakeAddressBase58 = 1;
+}
+
+message StakeActivationStatusResponse {
+		  ActivationStatus Status = 1;
+		  uint64 ActiveEpoch = 2;		  
+		  uint64 InactiveEpoch = 3;
+		  response.Status ret_status = 4;
+}
+
+message StakeAccountInfoRequest {
+		  string StakeAddressBase58 = 1;
+}
+
+message StakeAccountInfoResponse {
+		  string Amount = 1;
+		  string Owner = 2;
+		  bool Excutable = 3;
+		  uint64 RentEpoch = 4;
+		  StakeAccount StakeAccount = 5;
+		  response.Status ret_status = 6;
+}

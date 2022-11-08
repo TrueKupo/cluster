@@ -1,0 +1,1 @@
+postgres://solana_stake_user:solana_stake_password@localhost:5432/solana_stake_db?sslmode=require

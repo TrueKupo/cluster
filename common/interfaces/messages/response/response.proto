@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package response;
+
+option go_package = "github.com/truekupo/cluster/common/interfaces/messages/response";
+
+enum StatusCode {
+    OK = 0;
+    BadRequest = 1;
+    NotFound = 2;
+    InternalServerError = 3;
+}
+
+message Status {
+    StatusCode Code = 1;
+    string Error = 2;
+}

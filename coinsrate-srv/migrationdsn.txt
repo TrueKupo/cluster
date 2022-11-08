@@ -1,0 +1,1 @@
+postgres://test:1q2w3e@localhost:5432/coinsrate_db?sslmode=disable

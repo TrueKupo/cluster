@@ -1,0 +1,1 @@
+postgres://writer_user:writer_password@localhost:5432/writer_db?sslmode=disable

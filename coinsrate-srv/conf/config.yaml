@@ -1,0 +1,16 @@
+global:
+  grpc_listen_addr: 0.0.0.0:11557      # ENV:GRPC_LISTEN_ADDR_PORT
+system:
+  log_level: debug                     # ENV:LOG_LEVEL
+  log_file: /tmp/log.msg
+  log_format: text                     # ENV:LOG_FORMAT
+database:
+  host: localhost                      # ENV:DB_HOST
+  port: 25060                          # ENV:DB_PORT
+  driver: postgres
+  dbname: coinsrate_db                 # ENV:DB_NAME
+  user: coinsrate_user                 # ENV:DB_USER
+  password: coinsrate_password         # ENV:DB_PASSWORD
+  sslmode: disable
+  max_conns: 10
+  max_idle_conns: 2

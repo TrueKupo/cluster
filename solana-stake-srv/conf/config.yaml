@@ -1,0 +1,24 @@
+global:
+ grpc_listen_addr: 0.0.0.0:11556                 # ENV:GRPC_LISTEN_ADDR_PORT
+ validators_app_secret: dPydLVi7KFMSQerjK2xip5Hz # ENV:VALIDATORS_APP_SECRET
+system:
+ log_level: debug                                # ENV:LOG_LEVEL
+ log_file: /tmp/log.msg
+ log_format: text                                # ENV:LOG_FORMAT
+database:
+ driver: postgres
+ host: 127.0.0.1                     # ENV:DB_HOST
+ port: 5432                          # ENV:DB_PORT
+ dbname: solana_stake_db             # ENV:DB_NAME
+ user: solana_stake_user             # ENV:DB_USER
+ password: solana_stake_password     # ENV:DB_PASSWORD
+ sslmode: require
+ max_conns: 10
+ max_idle_conns: 2
+chain:
+ symbol: SOL
+ name: Solana
+ enable: true                        # ENV:SOL_ENABLED
+ net: testnet                        # ENV:SOL_NET
+ url:                                # ENV:SOL_URL
+ request_timeout: 200ms

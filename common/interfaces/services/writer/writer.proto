@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package writer;
+
+import "messages/response/response.proto";
+import "messages/types/types.proto";
+
+option go_package = "./writer";
+
+service WriterService {
+		  rpc GetBalanceOf (GetBalanceRequest) returns (GetBalanceResponse) {}
+		  rpc SendFromTo (SendFromToRequest) returns (SendFromToResponse) {}
+		  rpc GetTxStatusByHash (GetTxStatusByHashRequest) returns (GetTxStatusByHashResponse) {}
+}
+
+message GetBalanceRequest {
+	 types.CoinCode symbol = 1;	  
+    string address = 2;
+}
+
+message GetBalanceResponse {
+    string amount = 1;
+	 response.Status ret_status = 2;
+}
+
+message SendFromToRequest {
+		  types.CoinCode symbol = 1;
+		  string from_addr = 2;
+		  string to_addr = 3;
+		  string from_private = 4;
+		  string amount = 5;
+}
+
+message SendFromToResponse {
+		  types.Transaction transaction = 1;
+		  response.Status ret_status = 2;
+}
+
+message GetTxStatusByHashRequest {
+		  types.CoinCode symbol = 1;
+		  string tx_hash = 2;
+}
+
+message GetTxStatusByHashResponse {
+		  types.TxStatus status = 1;
+		  response.Status ret_status = 2;
+}

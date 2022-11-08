@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package account;
+
+import "messages/response/response.proto";
+import "messages/types/types.proto";
+
+option go_package = "./account";
+
+service AccountService {
+		  rpc NewMnemonic(NewMnemonicRequest) returns (NewMnemonicResponse) {}
+		  rpc GetSeedFromMnemonic(GetSeedFromMnemonicRequest) returns (SeedFromMnemonicResponse) {}
+		  rpc GetMasterKeyFromMnemonic(GetMasterKeyFromMnemonicRequest) returns (MasterKeyFromMnemonicResponse) {}
+		  rpc SeedDeriveToPublicKeyHex(SeedDeriveToAddressHexRequest) returns (SeedDeriveToAddressHexResponse) {}
+		  rpc SeedDeriveToPrivateKeyHex(SeedDeriveToAddressHexRequest) returns (SeedDeriveToAddressHexResponse) {}
+		  rpc SeedDeriveToAccountData(SeedDeriveToAccountRequest) returns (SeedDeriveToAccountResponse) {}
+}
+
+enum WordLang {
+	  ENGLISH = 0;
+	  FRENCH = 1;
+	  ITALIAN = 2;
+	  SPANISH = 3;
+	  CZECH = 4;
+	  JAPANESE = 5;
+	  KOREAN = 6; 
+	  CHINESESIMPLIFIED = 7;
+	  CHINESETRADITIONAL = 8;
+}
+
+message NewMnemonicRequest {
+		  int32 entropy = 1;
+		  WordLang lang = 2;
+}
+
+message NewMnemonicResponse {
+		  string mnemonic = 1;
+		  response.Status ret_status = 2;
+}
+
+message GetSeedFromMnemonicRequest {
+		  string mnemonic = 1;
+		  string password = 2;
+}
+
+message GetMasterKeyFromMnemonicRequest {
+		  string mnemonic = 1;
+		  string password = 2;
+}
+
+message SeedFromMnemonicResponse {
+		  bytes seed = 1;
+		  response.Status ret_status = 2;
+}
+
+message MasterKeyFromMnemonicResponse {
+		  bytes master_key = 1;
+		  response.Status ret_status = 2;
+}
+
+message SeedDeriveToAddressHexRequest {
+		  types.CoinCode symbol = 1;
+		  bytes seed = 2;
+		  string path = 3;
+}
+
+message SeedDeriveToAddressHexResponse {
+		  string data = 1;
+		  response.Status ret_status = 2;
+}
+
+message SeedDeriveToAccountRequest {
+		  types.CoinCode symbol = 1;
+		  bytes seed = 2;
+		  string path = 3;
+}
+
+message SeedDeriveToAccountResponse {
+		  string private_key = 1;
+		  string public_key = 2;
+		  string public_addr = 3;
+		  response.Status ret_status = 4;
+}

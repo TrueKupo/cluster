@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option go_package = "github.com/truekupo/cluster/common/interfaces/messages/types";
+
+package types;
+
+enum CoinCode {
+	  BTC = 0;
+	  ETH = 1;
+	  SOL = 2;
+	  USDT = 3;
+}
+
+enum Order {
+	  ASC = 0;
+	  DESC = 1;
+}
+
+enum TxStatus {
+	  NEW = 0;
+	  PROCESSING = 1;
+	  FINALIZED = 2;
+	  FAILED = 3;
+}
+
+enum TxDirection {
+	  INPUT = 0;
+	  OUTPUT = 1;
+	  INOUT = 2;
+}
+
+message Transaction {
+	  	  string tx_hash = 1;
+	  	  uint64 created_at = 2;
+		  uint64 block_num = 3;
+		  string from_addr = 4;
+		  string to_addr = 5;
+		  string amount = 6;
+		  string fee = 7;
+		  TxDirection direction = 8;
+		  TxStatus status = 9;		  
+}
+

@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package listener;
+
+import "messages/response/response.proto";
+import "messages/types/types.proto";
+
+option go_package = "./listener";
+
+service ListenerService {
+		  rpc AddAddress(AddAddressRequest) returns (AddAddressResponse) {}
+		  rpc AddTransaction(AddTransactionRequest) returns (AddTransactionResponse) {}
+		  rpc TransactionsByAddress(TransactionsByAddressRequest) returns (TransactionsByAddressResponse) {}
+		  rpc TransactionsByAccount(TransactionsByAccountRequest) returns (TransactionsByAccountResponse) {}
+		  rpc GetTxByHash (GetTxByHashRequest) returns (GetTxByHashResponse) {}
+}
+
+message AddAddressRequest {
+		  string account_uuid = 1;
+		  string address = 2;
+}
+
+message AddAddressResponse {
+		  response.Status ret_status = 1;
+}
+
+message AddTransactionRequest {
+		  types.Transaction transaction = 1;
+}
+
+message AddTransactionResponse {
+		  response.Status ret_status = 1;
+}
+
+message TransactionsByAddressRequest {
+		  string address = 1;
+		  int32 from = 2;
+		  int32 limit = 3;
+}
+
+message TransactionsByAddressResponse {
+		  repeated types.Transaction transactions = 1;
+		  response.Status ret_status = 2;
+}
+
+message TransactionsByAccountRequest {
+		  string account_uuid = 1;
+		  int32 from = 2;
+		  int32 limit = 3;
+}
+
+message TransactionsByAccountResponse {
+		  repeated types.Transaction transactions = 1;
+		  response.Status ret_status = 2;
+}
+
+message GetTxByHashRequest {
+		  types.CoinCode symbol = 1;
+		  string tx_hash = 2;
+}
+
+message GetTxByHashResponse {
+		  types.Transaction transaction = 1;
+		  response.Status ret_status = 2;
+}

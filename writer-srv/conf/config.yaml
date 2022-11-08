@@ -1,0 +1,34 @@
+global:
+ grpc_listen_addr: 0.0.0.0:11334   # ENV:GRPC_LISTEN_ADDR_PORT
+cluster:
+ listener:
+   - symbol: ETH
+     addr: 127.0.0.1:11445   # ENV:ETH_LISTENER_ADDR_PORT
+   - symbol: SOL
+     addr: 127.0.0.1:11446   # ENV:SOL_LISTENER_ADDR_PORT
+# writer:
+#   addr: 127.0.0.1:11446     # ENV:WRITER_ADDR_PORT
+system:
+ log_level: debug   # ENV:LOG_LEVEL
+ log_file: /tmp/log.msg
+ log_format: text   # ENV:LOG_FORMAT
+database:
+ driver: postgres
+ host: localhost    # ENV:DB_HOST
+ port: 5432         # ENV:DB_PORT
+ dbname: writer_db  # ENV:DB_NAME
+ user: writer_user  # ENV:DB_USER
+ password: writer_password # ENV:DB_PASSWORD
+ sslmode: disable
+ max_conns: 10
+ max_idle_conns: 2
+settings:
+  chains:
+    - symbol: ETH
+      name: Ethereum
+      net: testnet # ENV:ETH_NET
+      url: https://ropsten.infura.io/v3/6f919675490943e9aab9f31d85c3de93 # ENV:ETH_URL
+    - symbol: SOL
+      name: Solana
+      net: testnet # ENV:SOL_NET
+      url:         # ENV:SOL_URL

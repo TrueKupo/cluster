@@ -1,0 +1,26 @@
+global:
+ grpc_listen_addr: 0.0.0.0:11445     # ENV:GRPC_LISTEN_ADDR_PORT
+cluster:
+ writer:
+   addr: 127.0.0.1:11334             # ENV:WRITER_ADDR_PORT
+system:
+ log_level: debug                    # ENV:LOG_LEVEL
+ log_file: /tmp/log.msg
+ log_format: text                    # ENV:LOG_FORMAT
+database:
+ driver: postgres
+ host: localhost   # ENV:DB_HOST
+# port: 25060                         # ENV:DB_PORT
+ dbname: sol_listener_db             # ENV:DB_NAME
+ user: listener_user                       # ENV:DB_USER
+ password: listener_password                    # ENV:DB_PASSWORD
+ sslmode: require
+ max_conns: 10
+ max_idle_conns: 2
+chain:
+ symbol: SOL                                                              # ENV:CHAIN_SYMBOL
+ name: Solana                                                           # ENV:<SYMBOL>_NAME
+ net: testnet                                                             # ENV:<SYMBOL>_NET
+ url:      # ENV:<SYMBOL>_URL
+ request_timeout: 3s                                                      # ENV:<SYMBOL>_REQUEST_TIMEOUT
+ secret:                              # ENV:<SYMBOL>_SECRET

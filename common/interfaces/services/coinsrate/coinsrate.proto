@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package coinsrate;
+
+import "messages/response/response.proto";
+import "messages/types/types.proto";
+
+option go_package = "./coinsrate";
+
+service CoinsRateService {
+        rpc LastRates(LastRatesRequest) returns (LastRatesResponse) {}
+}
+
+message Rate {
+		  int64 UnixTm = 1;
+		  types.CoinCode Coin = 2;
+		  types.CoinCode Currency = 3;
+		  string Rate = 4;
+}
+
+message LastRatesRequest {
+		  repeated types.CoinCode Coins = 1;
+		  types.CoinCode Currency = 2;
+}
+
+message LastRatesResponse {
+		  repeated Rate rates = 1;
+		  response.Status ret_status = 2;
+}
